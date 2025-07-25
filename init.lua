@@ -7,6 +7,7 @@ package.loaded["lazyvim.config.keymaps"] = true
 require("config.options")
 require("config.autocmds")
 require("config.keymaps")
+require("config.lsp")
 
 require("core.lazy")
 
