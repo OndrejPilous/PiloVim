@@ -9,9 +9,21 @@ local lua_ls_opts = require("lsp.lua_ls") or {}
 vim.lsp.config('lua_ls', lua_ls_opts)
 vim.lsp.enable('lua_ls')
 
-local typescript_opts = require("lsp.typescript")
+local typescript_opts = require("lsp.ts_ls")
 vim.lsp.config('typescript', typescript_opts);
 vim.lsp.enable('typescript', typescript_opts)
+
+local eslint_opts = require("lsp.eslint")
+vim.lsp.config('eslint', eslint_opts)
+vim.lsp.enable('eslint', eslint_opts)
+
+local stylelint_opts = require("lsp.stylelint_lsp")
+vim.lsp.config('stylelint', stylelint_opts)
+vim.lsp.enable('stylelint', stylelint_opts)
+
+local vue_opts = require("lsp.vue_ls")
+vim.lsp.config('vue', vue_opts);
+vim.lsp.enable('vue', vue_opts)
 
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(ev)
@@ -68,6 +80,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
           filter = function(c) return c.id == client.id end, -- Use only this LSP client
         })
       end, { buffer = ev.buf, desc = 'Format buffer with LSP' })
+
+      -- Press <leader>ca for code actions/quick fixes
+      vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'LSP Code Action' })
+      vim.keymap.set('v', '<leader>ca', vim.lsp.buf.code_action, { desc = 'LSP Code Action (Visual)' })
     end
   end,
 })
