@@ -4,7 +4,7 @@ return {
 
     filetypes = { 'lua' },
 
-    root_markers = { { '.luarc.json', '.luarc.jsonc' }, '.git' },
+    root_markers = { '.luarc.json', '.luarc.jsonc', '.git' },
 
     -- Specific settings to send to the server. The schema is defined by the server.
     settings = {

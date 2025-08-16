@@ -5,8 +5,13 @@
 -- This actually just enables the lsp servers.
 -- The configuration is found in the lsp folder inside the nvim config folder,
 -- so in ~.config/lsp/lua_ls.lua for lua_ls, for example.
-local lua_ls_opts = require("lsp.lua_ls")
-vim.lsp.enable('lua_ls', lua_ls_opts)
+local lua_ls_opts = require("lsp.lua_ls") or {}
+vim.lsp.config('lua_ls', lua_ls_opts)
+vim.lsp.enable('lua_ls')
+
+local typescript_opts = require("lsp.typescript")
+vim.lsp.config('typescript', typescript_opts);
+vim.lsp.enable('typescript', typescript_opts)
 
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(ev)
@@ -57,7 +62,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       end, { buffer = ev.buf, expr = true })
 
       -- Keymap for formatting the buffer (e.g., <leader>df)
-      vim.keymap.set('n', '<leader>df', function()
+      vim.keymap.set('n', '<leader>cf', function()
         vim.lsp.buf.format({
           async = true,                                      -- Non-blocking for large files
           filter = function(c) return c.id == client.id end, -- Use only this LSP client
