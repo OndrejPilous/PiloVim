@@ -60,13 +60,13 @@
 
 return {
   cmd = { 'vtsls', '--stdio' },
-  filetypes = {
-    'javascript',
-    'javascriptreact',
-    'javascript.jsx',
-    'typescript',
-    'typescriptreact',
-    'typescript.tsx',
-  },
+  filetypes = { "vue" }, -- Only attach vtsls to .vue, let typescript-language-server handle .ts everywhere else
   root_markers = { 'tsconfig.json', 'package.json', 'jsconfig.json', '.git' },
+  settings = {
+    typescript = {
+      tsserver = {
+        pluginPaths = { "@vue/typescript-plugin" }
+      }
+    }
+  }
 }

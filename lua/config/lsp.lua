@@ -9,9 +9,13 @@ local lua_ls_opts = require("lsp.lua_ls") or {}
 vim.lsp.config('lua_ls', lua_ls_opts)
 vim.lsp.enable('lua_ls')
 
-local typescript_opts = require("lsp.ts_ls")
-vim.lsp.config('typescript', typescript_opts);
-vim.lsp.enable('typescript', typescript_opts)
+local ts_ls_opts = require("lsp.ts_ls")
+vim.lsp.config('ts_ls', ts_ls_opts)
+vim.lsp.enable('ts_ls', ts_ls_opts)
+
+local vtsls_opts = require("lsp.vtsls")
+vim.lsp.config('vtsls', vtsls_opts)
+vim.lsp.enable('vtsls', vtsls_opts)
 
 local eslint_opts = require("lsp.eslint")
 vim.lsp.config('eslint', eslint_opts)
@@ -22,7 +26,7 @@ vim.lsp.config('stylelint', stylelint_opts)
 vim.lsp.enable('stylelint', stylelint_opts)
 
 local vue_opts = require("lsp.vue_ls")
-vim.lsp.config('vue', vue_opts);
+vim.lsp.config('vue', vue_opts)
 vim.lsp.enable('vue', vue_opts)
 
 vim.api.nvim_create_autocmd('LspAttach', {
