@@ -92,5 +92,8 @@ return {
 			vim.keymap.set('n', '<leader>sn', function()
 				builtin.find_files { cwd = vim.fn.stdpath 'config' }
 			end, { desc = '[S]earch [N]eovim files' })
+
+                        -- Goto references
+                        vim.keymap.set('n', '<leader>gr', "<cmd>Telescope lsp_references<cr>", { desc = 'LSP References (Telescope)' })
 		end,
 	}

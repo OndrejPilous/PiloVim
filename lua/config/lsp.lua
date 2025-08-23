@@ -38,7 +38,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       -- reactivate autocompletion
       vim.keymap.set('i', '<C-Space>', function()
         vim.lsp.completion.get()
-      end, { buffer = ev.buf })
+      end, { buffer = ev.buf, desc = 'Trigger completion' })
 
       -- Custom Esc to abort completion and revert to typed text
       vim.keymap.set('i', '<Esc>', function()
@@ -78,16 +78,22 @@ vim.api.nvim_create_autocmd('LspAttach', {
       end, { buffer = ev.buf, expr = true })
 
       -- Keymap for formatting the buffer (e.g., <leader>df)
-      vim.keymap.set('n', '<leader>cf', function()
+      vim.keymap.set('n', '<leader>df', function()
         vim.lsp.buf.format({
           async = true,                                      -- Non-blocking for large files
           filter = function(c) return c.id == client.id end, -- Use only this LSP client
         })
-      end, { buffer = ev.buf, desc = 'Format buffer with LSP' })
+      end, { buffer = ev.buf, desc = '[D]ocument [F]ormat (format buffer with LSP)' })
 
       -- Press <leader>ca for code actions/quick fixes
-      vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'LSP Code Action' })
-      vim.keymap.set('v', '<leader>ca', vim.lsp.buf.code_action, { desc = 'LSP Code Action (Visual)' })
+      vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = '[C]ode [A]ction' })
+      vim.keymap.set('v', '<leader>ca', vim.lsp.buf.code_action, { desc = '[C]ode [A]ction (Visual)' })
+
+      -- Rename symbol
+      vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { desc = "[C]ode [R]ename (Symbol)" })
+
+      -- Go to type definition
+      vim.keymap.set('n', '<leader>gy', vim.lsp.buf.type_definition, { buffer = ev.buf, desc = 'Go to Type Definition' })
     end
   end,
 })

@@ -57,15 +57,23 @@
 --- ```
 ---
 --- See `vue_ls` section and https://github.com/vuejs/language-tools/wiki/Neovim for more information.
+local vue_language_server_path = vim.fn.getcwd() ..
+    "/node_modules/@vue/language-server"
+local vue_plugin = {
+  name = "@vue/typescript-plugin",
+  location = vue_language_server_path,
+  languages = { "vue" },
+  configNamespace = "typescript",
+}
 
 return {
   cmd = { 'vtsls', '--stdio' },
   filetypes = { "vue" }, -- Only attach vtsls to .vue, let typescript-language-server handle .ts everywhere else
   root_markers = { 'tsconfig.json', 'package.json', 'jsconfig.json', '.git' },
   settings = {
-    typescript = {
+    vtsls = {
       tsserver = {
-        pluginPaths = { "@vue/typescript-plugin" }
+        globalPlugins = { vue_plugin }
       }
     }
   }
