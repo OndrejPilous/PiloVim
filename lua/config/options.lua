@@ -17,6 +17,7 @@ vim.o.mouse = 'a'
 
 -- Set language
 vim.opt.spelllang = { "en" }
+vim.opt.spell = true
 
 -- Save undo history
 vim.opt.undofile = true
