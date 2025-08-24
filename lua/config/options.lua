@@ -25,3 +25,6 @@ vim.opt.undolevels = 10000
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+
+-- Delay until refresh - for faster diagnostics and completion popup
+vim.opt.updatetime = 300
