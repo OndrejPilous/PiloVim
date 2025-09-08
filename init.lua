@@ -1,13 +1,13 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-package.loaded["lazyvim.config.options"] = true
-package.loaded["lazyvim.config.autocmds"] = true
-package.loaded["lazyvim.config.keymaps"] = true
+-- before plugins are loaded
 require("config.options")
 require("config.autocmds")
 require("config.keymaps")
-require("config.lsp")
 
+-- plugins are loaded
 require("core.lazy")
 
+-- after plugins are loaded
+require("config.lsp")

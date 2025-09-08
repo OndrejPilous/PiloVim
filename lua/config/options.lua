@@ -5,11 +5,11 @@ vim.opt.scrolloff = 10
 vim.opt.termguicolors = true
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
-vim.opt.expandtab = true -- Force spaces over tabs
-vim.opt.wrap = false -- Disable line wrap
-vim.opt.showmode = false -- Dont show mode since we have a statusline
-vim.opt.ruler = false -- Disable the default ruler
-vim.opt.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift the text each time
+vim.opt.expandtab = true      -- Force spaces over tabs
+vim.opt.wrap = false          -- Disable line wrap
+vim.opt.showmode = false      -- Dont show mode since we have a statusline
+vim.opt.ruler = false         -- Disable the default ruler
+vim.opt.signcolumn = "yes"    -- Always show the signcolumn, otherwise it would shift the text each time
 vim.opt.winborder = 'rounded' -- set default border for all floating windows
 
 -- Enable mouse mode, can be useful for resizing splits for example!
@@ -17,7 +17,7 @@ vim.o.mouse = 'a'
 
 -- Set language
 vim.opt.spelllang = { "en" }
-vim.opt.spell = true
+vim.opt.spell = false
 
 -- Save undo history
 vim.opt.undofile = true

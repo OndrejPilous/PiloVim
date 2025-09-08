@@ -57,24 +57,45 @@
 --- ```
 ---
 --- See `vue_ls` section and https://github.com/vuejs/language-tools/wiki/Neovim for more information.
-local vue_language_server_path = vim.fn.getcwd() ..
-    "/node_modules/@vue/language-server"
-local vue_plugin = {
-  name = "@vue/typescript-plugin",
-  location = vue_language_server_path,
-  languages = { "vue" },
-  configNamespace = "typescript",
-}
 
-return {
-  cmd = { 'vtsls', '--stdio' },
-  filetypes = { "vue" }, -- Only attach vtsls to .vue, let typescript-language-server handle .ts everywhere else
-  root_markers = { 'tsconfig.json', 'package.json', 'jsconfig.json', '.git' },
-  settings = {
-    vtsls = {
-      tsserver = {
-        globalPlugins = { vue_plugin }
-      }
-    }
-  }
-}
+return function()
+	local ok, registry = pcall(require, "mason-registry")
+	if not ok then return end
+
+	local vue_ls
+	-- wait for Mason to initialize the package
+	for _ = 1, 10 do
+		if registry.is_installed("vue-language-server") then
+			vue_ls = registry.get_package("vue-language-server")
+			break
+		end
+		vim.wait(50) -- wait 50ms, retry
+	end
+
+	if not vue_ls then
+		vim.notify("vue-language-server not ready, skipping vtsls", vim.log.levels.WARN)
+		return
+	end
+
+	local vue_plugin_path = vue_ls:get_install_path() .. "/node_modules/@vue/typescript-plugin"
+
+	local opts = {
+		cmd = { "vtsls", "--stdio" },
+		filetypes = { "vue" },
+		settings = {
+			vtsls = {
+				tsserver = {
+					globalPlugins = { {
+						name = "@vue/typescript-plugin",
+						location = vue_plugin_path,
+						languages = { "vue" },
+						configNamespace = "typescript",
+					} }
+				}
+			}
+		}
+	}
+
+	vim.lsp.config("vtsls", opts)
+	vim.lsp.enable("vtsls", opts)
+end

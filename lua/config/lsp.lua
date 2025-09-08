@@ -5,71 +5,50 @@
 -- This actually just enables the lsp servers.
 -- The configuration is found in the lsp folder inside the nvim config folder,
 -- so in ~.config/lsp/lua_ls.lua for lua_ls, for example.
-local lua_ls_opts = require("lsp.lua_ls") or {}
-vim.lsp.config('lua_ls', lua_ls_opts)
-vim.lsp.enable('lua_ls')
 
-local ts_ls_opts = require("lsp.ts_ls")
-vim.lsp.config('ts_ls', ts_ls_opts)
-vim.lsp.enable('ts_ls', ts_ls_opts)
+-- local lua_ls_opts = require("lsp.lua_ls") or {}
+-- vim.lsp.config('lua_language_server', lua_ls_opts)
+-- vim.lsp.enable('lua_language_server')
+--
+-- local ts_ls_opts = require("lsp.ts_ls")
+-- vim.lsp.config('ts_ls', ts_ls_opts)
+-- vim.lsp.enable('ts_ls')
 
-local vtsls_opts = require("lsp.vtsls")
-vim.lsp.config('vtsls', vtsls_opts)
-vim.lsp.enable('vtsls', vtsls_opts)
+-- local eslint_opts = require("lsp.eslint")
+-- vim.lsp.config('eslint_d', eslint_opts)
+-- vim.lsp.enable('eslint_d', eslint_opts)
+--
+-- local stylelint_opts = require("lsp.stylelint_lsp")
+-- vim.lsp.config('stylelint_lsp', stylelint_opts)
+-- vim.lsp.enable('stylelint_lsp', stylelint_opts)
+--
 
-local eslint_opts = require("lsp.eslint")
-vim.lsp.config('eslint', eslint_opts)
-vim.lsp.enable('eslint', eslint_opts)
-
-local stylelint_opts = require("lsp.stylelint_lsp")
-vim.lsp.config('stylelint', stylelint_opts)
-vim.lsp.enable('stylelint', stylelint_opts)
-
-local vue_opts = require("lsp.vue_ls")
-vim.lsp.config('vue', vue_opts)
-vim.lsp.enable('vue', vue_opts)
-
-vim.api.nvim_create_autocmd('LspAttach', {
-  callback = function(ev)
-    local client = vim.lsp.get_client_by_id(ev.data.client_id)
-    if client:supports_method('textDocument/completion') then
-      vim.opt.completeopt = { 'menu', 'menuone', 'fuzzy', 'popup', 'noselect' }
-
-      -- Keymap for formatting the buffer (e.g., <leader>df)
-      vim.keymap.set('n', '<leader>df', function()
-        vim.lsp.buf.format({
-          async = true,                                      -- Non-blocking for large files
-          filter = function(c) return c.id == client.id end, -- Use only this LSP client
-        })
-      end, { buffer = ev.buf, desc = '[D]ocument [F]ormat (format buffer with LSP)' })
-
-      -- Press <leader>ca for code actions/quick fixes
-      vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = '[C]ode [A]ction' })
-      vim.keymap.set('v', '<leader>ca', vim.lsp.buf.code_action, { desc = '[C]ode [A]ction (Visual)' })
-
-      -- Rename symbol
-      vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { desc = "[C]ode [R]ename (Symbol)" })
-
-      -- Go to type definition
-      vim.keymap.set('n', '<leader>gy', vim.lsp.buf.type_definition, { buffer = ev.buf, desc = 'Go to Type Definition' })
-    end
-  end,
-})
-
--- Diagnostics
-vim.diagnostic.config({
-  -- Use the default configuration
-  -- virtual_lines = true
-
-  -- Alternatively, customize specific options
-  virtual_lines = {
-    -- Only show virtual line diagnostics for the current cursor line
-    current_line = true,
-  },
-  virtual_text = true,
-  signs = true,
-  update_in_insert = true,
-  underline = true,
-  severity_sort = true
-}
-)
+-- vim.api.nvim_create_autocmd('LspAttach', {
+-- 	callback = function(ev)
+-- 		vim.opt.completeopt = { 'menu', 'menuone', 'fuzzy', 'popup', 'noselect' }
+--
+-- 		vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = "LSP Hover" })
+--
+-- 		-- Keymap for formatting the buffer (e.g., <leader>df)
+-- 		vim.keymap.set('n', '<leader>df', function()
+-- 			vim.lsp.buf.format({
+-- 				async = true, -- Non-blocking for large files
+-- 			})
+-- 		end, { buffer = ev.buf, desc = '[D]ocument [F]ormat (format buffer with LSP)' })
+--
+-- 		-- Press <leader>ca for code actions/quick fixes
+-- 		vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = '[C]ode [A]ction' })
+-- 		vim.keymap.set('v', '<leader>ca', vim.lsp.buf.code_action, { desc = '[C]ode [A]ction (Visual)' })
+--
+-- 		-- Rename symbol
+-- 		vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { desc = "[C]ode [R]ename (Symbol)" })
+-- 		-- Go to type definition
+-- 		vim.keymap.set('n', '<leader>gy', vim.lsp.buf.type_definition,
+-- 			{ buffer = ev.buf, desc = 'Go to Type Definition' })
+--
+--
+-- 		-- Go to definition
+-- 		vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "[G]o to [D]efinition" })
+-- 	end,
+-- })
+--
