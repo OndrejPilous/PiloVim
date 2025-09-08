@@ -91,7 +91,17 @@ return {
 				end,
 			}
 
-			require("mason").setup()
+			require("mason").setup({
+				opts = {
+					ui = {
+						icons = {
+							package_installed = "✓",
+							package_pending = "➜",
+							package_uninstalled = "✗",
+						},
+					},
+				},
+			})
 			require("mason-lspconfig").setup({
 				ensure_installed = {
 					"lua_ls",
@@ -99,6 +109,7 @@ return {
 					"ts_ls",
 					"eslint",
 				},
+				automatic_instalation = true,
 			})
 
 			vim.lsp.config("vue_ls", vue_ls_config)
@@ -130,7 +141,28 @@ return {
 				end,
 			})
 
-			require("lspconfig").eslint.setup({})
+			require("lspconfig").eslint.setup({
+				on_attach = function(client, bufnr)
+					-- optional: keymap to run eslint fix
+					vim.keymap.set("n", "<leader>ef", function()
+						vim.lsp.buf.code_action({ context = { only = { "source.fixAll.eslint" } } })
+					end, { buffer = bufnr, desc = "Fix all ESLint issues" })
+				end,
+				settings = {
+					frmat = false,
+				},
+				flags = {
+					debounce_text_changes = 150,
+				},
+			})
+			require("lspconfig").stylelint_lsp.setup({
+				settings = {
+					stylelintplus = {
+						autoFixOnSave = false,
+						validatOnType = true,
+					},
+				},
+			})
 
 			-- Diagnostics
 			vim.diagnostic.config({
@@ -171,6 +203,7 @@ return {
 			vim.keymap.set("n", "<leader>df", function()
 				require("conform").format({
 					async = true,
+					fallback = "lsp",
 				})
 				-- vim.lsp.buf.format({
 				--   async = true, -- Non-blocking for large files
