@@ -108,6 +108,8 @@ return {
 					"vue_ls",
 					"ts_ls",
 					"eslint",
+					"spectral",
+					"cssls",
 				},
 				automatic_instalation = true,
 			})
