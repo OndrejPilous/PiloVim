@@ -143,28 +143,32 @@ return {
 				end,
 			})
 
-			require("lspconfig").eslint.setup({
+			vim.lsp.config("eslint", {
 				on_attach = function(client, bufnr)
-					-- optional: keymap to run eslint fix
 					vim.keymap.set("n", "<leader>ef", function()
 						vim.lsp.buf.code_action({ context = { only = { "source.fixAll.eslint" } } })
-					end, { buffer = bufnr, desc = "Fix all ESLint issues" })
+					end, { buffer = bufnr })
 				end,
+
 				settings = {
-					frmat = false,
+					format = false,
 				},
+
 				flags = {
 					debounce_text_changes = 150,
 				},
 			})
-			require("lspconfig").stylelint_lsp.setup({
+
+			vim.lsp.config("stylelint_lsp", {
 				settings = {
 					stylelintplus = {
 						autoFixOnSave = false,
-						validatOnType = true,
+						validateOnType = true,
 					},
 				},
 			})
+
+			vim.lsp.enable({ "eslint", "stylelint_lsp" })
 
 			-- Diagnostics
 			vim.diagnostic.config({
@@ -195,6 +199,7 @@ return {
 				lua = { "stylua" },
 				javascript = { "prettier" },
 				typescript = { "prettier" },
+				json = { "prettier" },
 				vue = { "prettier" },
 			},
 		},
